@@ -1,95 +1,65 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
-import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
+import akka.actor.UntypedActor;
 
-import com.avaje.ebean.Ebean;
-
-@Entity
+/**
+ * Model is an abstraction of Actor. Because it takes a class reference, one
+ * could have subtypes of this class. By the way, the best abstraction would be
+ * to link a model to an interface which some actors would implements. It would
+ * allow something like multiple inheritance. As an actor would implements
+ * several interfaces, it could be sent different messages. The main issue with
+ * this idea is an actor only receive message by onReceive() and the message
+ * sending protocol doesn't imply any other method.
+ */
+// @Entity
 public class Channel extends Model {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private long id;
-	
-	@Required
-	private String name;
-	
-	private String description;
-	
-	private String logo;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+	// @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	private List<Trigger> triggers;
-	
-	@OneToMany(cascade = CascadeType.ALL)
+	// @OneToMany(mappedBy = "channel", cascade = CascadeType.ALL)
 	private List<Action> actions;
-	
-	//RECIPES WHERE THE CHANNEL IS A TRIGGER
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="triggerChannel")
-	private List<Recipe> triggerRecipes;
-	
-	//RECIPES WHERE THE CHANNEL IS AN ACTION
-	@OneToMany(cascade = CascadeType.ALL, mappedBy="actionChannel")
-	private List<Recipe> actionRecipes;
-	
-	public static Model.Finder<Long, Channel> find = new Model.Finder<Long, Channel>(
-			Long.class, Channel.class);
-	
-	public Channel(String name, String description) {
-		this.name = name;
-		this.description = description;
-		triggerRecipes = new ArrayList<Recipe>();
-		actionRecipes = new ArrayList<Recipe>();
-	}
-	
-	public Channel() {
-		triggerRecipes = new ArrayList<Recipe>();
-		actionRecipes = new ArrayList<Recipe>();
-	}
-	
-	public static List<Channel> getAllChannels() {
-		return Ebean.find(Channel.class).findList();
-	}
-	
-	public long getId() {
-		return id;
+
+	// @Id
+	private long id;
+	/**
+	 * Actor class
+	 */
+	private Class<? extends UntypedActor> clazz;
+	private String description;
+
+	public final static Model.Finder<Long, Channel> find = new Model.Finder<Long, Channel>(Long.class, Channel.class);
+
+	@Override
+	public String toString() {
+		return "Channel [id=" + id + ", name=" + clazz.getSimpleName() + ", description=" + description + ", triggers="
+				+ triggers + ", actions=" + actions + "]";
 	}
 
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
+	public Channel(List<Trigger> triggers, List<Action> actions, Class<? extends UntypedActor> clazz, String description) {
+		this.triggers = triggers;
+		this.actions = actions;
+		this.clazz = clazz;
 		this.description = description;
 	}
-	
-	public String getLogo() {
-		return logo;
+
+	@SuppressWarnings("unused")
+	private void setId(long id) {
 	}
 
-	public void setLogo(String logo) {
-		this.logo = logo;
-	}
+	/*
+	 * Below, automatically generated methods.
+	 */
 
 	public List<Trigger> getTriggers() {
 		return triggers;
@@ -106,33 +76,31 @@ public class Channel extends Model {
 	public void setActions(List<Action> actions) {
 		this.actions = actions;
 	}
-	
-	public List<Recipe> getTriggerRecipes() {
-		return triggerRecipes;
+
+	public Class<? extends UntypedActor> getClazz() {
+		return clazz;
 	}
 
-	public void setTriggerRecipes(List<Recipe> triggerRecipes) {
-		this.triggerRecipes = triggerRecipes;
+	/**
+	 * This allows a recipe to be an abstraction
+	 */
+	public void setName(Class<? extends UntypedActor> clazz) {
+		this.clazz = clazz;
 	}
 
-	public List<Recipe> getActionRecipes() {
-		return actionRecipes;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setActionRecipes(List<Recipe> actionRecipes) {
-		this.actionRecipes = actionRecipes;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public Channel getChannelFromId(long id){
-		return Ebean.find(Channel.class, id);
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	
 
-	@Override
-	public String toString() {
-		return "Channel [id=" + id + ", name=" + name + ", description="
-				+ description + ", triggers=" + triggers + ", actions="
-				+ actions + "]";
+	public long getId() {
+		return id;
 	}
-	
 }

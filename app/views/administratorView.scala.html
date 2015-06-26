@@ -1,44 +1,54 @@
-@(channels: List[Channel])
+@(channels: List[Channel], triggersMap: Map[Channel, List[Trigger]])
 @import java.math.BigInteger; var counter=0; 
 @main("Agents autonomes") {
 
-<header class='l-header'>
-	<!-- <link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css"> -->
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
-		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.viewAdministratorLog()" class="button">View log</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
+
+<header class="l-header">
+	<div class="l-site-header">
+		<div class="l-site-header-menus is-closed" id="site-header-menus">
+			<div class="l-site-header-menus-inner">
+				<nav class="l-site-header-flexible-nav">
+					<ul class="menu" class="nav nav-site is-authenticated">
+						<li class="nav_item" >
+							<a href="@routes.Application.administratorView()">Main</a>
+						</li>
+						<li class="nav_item" >
+							<a href="@routes.Application.viewAdministratorLog()">View log</a>
+						</li>
+						<li class="nav_item" >
+							<a href="@routes.Application.index()">Log out</a>
+						</li>
+					</ul>
+				</nav>
 			</div>
 		</div>
 	</div>
 </header>
+
+
 <article class="l-page-content">
-		<div id="statement_create">
-			<form class="navbar-form pull-right">
-				<div class="hero">
-					<div class="row">
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>What do you want to do?</h2>
-							<p>Hello Administrator</p>
-						</div> 
-					</div>
-				</div>
-			</form>
+	<div id="statement_create">
+		<form class="navbar-form pull-right"
+			action="@routes.Application.viewAdministratorLog()">
+
+			<!-- <input class="span2" type="text" placeholder="Email"> <input
+		class="span2" type="password" placeholder="Password">
+	<button type="submit" class="btn">Sign in</button>
+ -->
+			<!-- Main hero unit for a primary marketing message or call to action -->
+
+			<br />
+			<div class="hero-unit">
+				<h1>Agents autonomes (administrator)</h1>
+				<p>INF380</p>
+			</div>
+
 
 			<div class='is-dimmable'>
 				<a class='focus-here' href='#'></a>
 				<h2 class='composer_section_header'>
 					Choose Trigger Channel <span class='composer_section_step'>step
-						1 of 4</span>
+						1 of 7</span>
 				</h2>
 				<p class='composer_section_description'>Showing Channels that
 					provide at least one Trigger.</p>
@@ -46,7 +56,7 @@
 					<input autocapitalization="off" autocomplete="off"
 						autocorrect="off" class="channels-search_input"
 						id="trigger_search_channels_field" name="q"
-						placeholder="Search Channels" type="text" onclick='hideStep2of7(); hideStep3of7();' />
+						placeholder="Search Channels" type="text" onclick='hideStep2of7()' />
 					<p class='channel_search_advice hide'
 						id='trigger_search_channels_field_advice'></p>
 
@@ -74,11 +84,11 @@
       channelsSearch["channels_trigger_search_channels_field"] = [
 		@for(channel <- channels) {   
 			@if(channel.getTriggers().size() > 0){
-				{"value":"@channel.getName()",
-				 "name":"@channel.getName()",
+				{"value":"@channel.getClazz().getSimpleName()",
+				 "name":"@channel.getClazz().getSimpleName()",
 				 "id":@channel.getId(),
-				 "imgUrl":"@channel.getLogo()",
-				 "url":"@channel.getName()"},
+				 "imgUrl":"https://d3rnbxvnd0hlox.cloudfront.net/images/channels/83/icons/small.png",
+				 "url":"/@channel.getClazz().getSimpleName()"},
 				}
 			}
 		 ]
@@ -201,17 +211,7 @@
       
       function hideStep2of7(){
     	  document.getElementById("step2of7").style.display = "none";
-      };
-      
-      function displayStep3of7(trigger_id){
-    	  document.getElementById("step3of7").style.display = "block";
-    	  document.getElementById("trigger_chosen_to_activate_id").value = trigger_id;
-    	  document.getElementById("choose_type_activation_subtitle").innerHTML = "Choose activation for trigger " + trigger_id;
-      };
-      
-      function hideStep3of7(){
-    	  document.getElementById("step3of7").style.display = "none";
-      };
+      }
      
       
     
@@ -226,7 +226,7 @@
 						@if(channel.getTriggers().size() > 0){ <a
 							class="mod-index-@counter channel-list_icon"
 							data-channel_id='@channel.getId()'
-							data-channel_module_name='@channel.getName()' data-remote
+							data-channel_module_name='@channel.getClazz().getSimpleName()' data-remote
 							data-track-data='{"controller":"statements",
 				   								"action":"new",
 				   								"channel_id":@channel.getId(),
@@ -237,10 +237,10 @@
 							id='ind_t_channel_@channel.getId()'
 							ifttt-trigger-channel-button='1'
 							title="@channel.getDescription()"> <img
-							alt="@channel.getName()" class="channel-list_icon_img"
+							alt="@channel.getClazz().getSimpleName()" class="channel-list_icon_img"
 							id="channel_1172726678"
-							src="@channel.getLogo()" />
-							@channel.getName()
+							src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/28/icons/regular.png" />
+							@channel.getClazz().getSimpleName()
 							@{counter += 1}
 						</a> } }
 					</div>
@@ -249,15 +249,15 @@
 
 			<div class='is-dimmable' id='step2of7' style='display: none'>
 				<h2 class='composer_section_header'>
-					Choose a Trigger <span class='composer_section_step'>step 3 of 4</span>
+					Choose a Trigger <span class='composer_section_step'>step 2 of 7</span>
 				</h2>
 				<input id="statement_live_trigger_attributes_trigger_id"
 					name="statement[live_trigger_attributes][trigger_id]" type="hidden">
 				<div class="trigger-list"></div>
 
-				@for(channel <- channels){
-					@if(channel.getTriggers().size()>0){
-						@for(trigger <- channel.getTriggers()){
+				@for((key, value) <- triggersMap){
+					@if(value.size()>0){
+						@for(trigger <- value){
 							<a class="trigger-list_item"
 							data-track-data='{"controller":"statements",
 				 								"action":"choose_trigger", 
@@ -265,17 +265,19 @@
 												"funnel":{"primary":"new_statement","primary_id":"bdcfc20d5ac183be6938f4aaab994beb"}}'
 							data-track-event="scr_choose_trigger"
 							data-channel_id="@trigger.getChannel().getId()"
-							data-trigger_id="@trigger.getId()"  id="trigger_607940575"
-							href='@routes.Application.chooseActivationType(trigger.getId())'>
-								<h3 class="trigger-list_item_name">@trigger.getName()</h3>
+							data-trigger_id="@trigger.getId()" href="#" id="trigger_607940575"
+							href="@routes.Application.activateTrigger(trigger.getId())">
+								<h3 class="trigger-list_item_name">@trigger.getClazz().getSimpleName()</h3>
 								<p class="trigger-list_item_desc">@trigger.getDescription()</p>
-								<p class="trigger-list_item_desc">@trigger.getId()</p>
 							</a>
 						}
 					}
 				}
 			</div>
 
+
+
+		</form>
 	</div>
 </article>
 }

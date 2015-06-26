@@ -1,4 +1,5 @@
 @(user: User, recipe: Recipe)
+@import java.math.BigInteger; var counter=0;
 @main("Agents autonomes") {
 
 <!DOCTYPE html>
@@ -6,58 +7,44 @@
 <body>
 
 <header class='l-header'>
-	<!-- <link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css"> -->
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
+
+	<div class='l-site-header'>
+		<div class='l-site-header-menus is-closed' id='site-header-menus'>
+			<div class='l-site-header-menus-inner'>
+				<nav class='l-site-header-flexible-nav'>
+				<ul class='nav nav-site is-authenticated'>
+					<form class="navbar-form pull-right"
+						action="@routes.Application.userLogOut()"> 
+						<button type="submit" class="btn" name="HomeButton"class="btn"> Home </button>
+						<button type="submit" class="btn" name="LogOutButton"> Log out </button>
+					</form> <br>
+				</ul></nav>
+			</div>
 		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
+	</div>
+
+	<div class='l-page-header'>
+		<div class='l-page-header-inner'>
+			<div class='is-alone l-page-title-unit'>
+				<div class="hero-unit">
+				<h1>Log for recipe: @recipe.getName() </h1>
+				<p>Hello @user.getUsername()</p>
+			</div>
 			</div>
 		</div>
 	</div>
 </header>
 
-	<article class="l-page-content">
-		<div id="statement_create">
-			<form class="navbar-form pull-right">
-				<!-- <input class="span2" type="text" placeholder="Email"> <input
-				class="span2" type="password" placeholder="Password">
-			<button type="submit" class="btn">Sign in</button>
-		 -->
-				<!-- Main hero unit for a primary marketing message or call to action -->
-				<br />
-<!-- 				<div class="hero-unit">
-					<h1></h1>
-					<p>Hello @user.getUsername()</p>
-				</div> -->
-				<div class="hero">
-					<div class="row">
-<!-- 					<h1>What do you want to do?</h1>
-					<p>Hello @user.getUsername()</p> -->
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>Recipe Log: @recipe.getTitle()</h2>
-							<p>Hello @user.getUsername()</p>
-						</div> 
-					</div>
-				</div>
-				</form>
-
+<article class='l-page-content'>
+<ul>
 @if(recipe.getLog().size()>0 ) {
-	@for(log <- recipe.getLogReverseOrder() ){
-	@if(log!=null){
-	<!--	
+	@for(log <- recipe.getLog() ){
+		
 
 <li class='log-item log-item_alt'>
 	<div class='log-item' id='log-f8ef0fa00a7611e5ad8922000a2180da'>
 	
-	<div class='log-item_icons'>
+<!--	<div class='log-item_icons'>
 		<div class='personal_recipe_manage_visual'>
 			<a href="/myrecipes/personal/24079820" class="recipe recipe-personal  recipe-tiny  is-contained " data-color="background-image: -ms-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -moz-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -o-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #78DBFF), color-stop(0.5, #78DBFF), color-stop(0.5, #A4C739), color-stop(1, #A4C739)); background-image: -webkit-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: linear-gradient(to right, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%);" data-gray="background-image: -ms-linear-gradient(left, #c9c9c9 0%, #c9c9c9 50%, #b5b5b5 50%, #b5b5b5 100%); background-image: -moz-linear-gradient(left, #c9c9c9 0%, #c9c9c9 50%, #b5b5b5 50%, #b5b5b5 100%); background-image: -o-linear-gradient(left, #c9c9c9 0%, #c9c9c9 50%, #b5b5b5 50%, #b5b5b5 100%); background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #c9c9c9), color-stop(0.5, #c9c9c9), color-stop(0.5, #b5b5b5), color-stop(1, #b5b5b5)); background-image: -webkit-linear-gradient(left, #c9c9c9 0%, #c9c9c9 50%, #b5b5b5 50%, #b5b5b5 100%); background-image: linear-gradient(to right, #c9c9c9 0%, #c9c9c9 50%, #b5b5b5 50%, #b5b5b5 100%);" style="background-image: -ms-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -moz-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -o-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: -webkit-gradient(linear, left top, right top, color-stop(0, #78DBFF), color-stop(0.5, #78DBFF), color-stop(0.5, #A4C739), color-stop(1, #A4C739)); background-image: -webkit-linear-gradient(left, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%); background-image: linear-gradient(to right, #78DBFF 0%, #78DBFF 50%, #A4C739 50%, #A4C739 100%);"><span class='recipe_if' data-color='#78DBFF' data-gray='#c9c9c9' style='background-color: #78DBFF'>if</span><span class='recipe_trigger' data-color='#78DBFF' data-gray='#c9c9c9' style='background-color: #78DBFF' title='Weather'>
 			<span class='recipe_component-icon'><picture><source srcset='https://ifttt.com/channels/image/weather?type=variant' media='(min-width: 980px)'> <source srcset='https://ifttt.com/channels/image/weather?type=variant' media='(min-width: 720px)'> <img src='https://ifttt.com/channels/image/weather?type=variant' alt=Weather class='channel-icon -js_use_variant'></picture></span></span><span class='recipe_then' data-color='#A4C739' data-gray='#b5b5b5' style='background-color: #A4C739'>then</span><span class='recipe_action' data-color='#A4C739' data-gray='#b5b5b5' style='background-color: #A4C739' title='Android SMS'>
@@ -65,42 +52,17 @@
 			</span></a>
 		</div>
 	</div>
-
+-->
 	<div class='log-item_body'>
-		<div class='log-item_type'>@log</div>
+		<div class='log-item_type'>@log</div></div>
 		<div class='log-item_message'></div>
-	</div> 
-	
-</div>
-</li>	-->
-	<div class='is-dimmable'> 
-			<a class='focus-here' href='#'></a>
-			<h2 class='composer_section_header' style="font-size: 1rem; padding: 10px 120px 0px 0;">
-				@log.getLogInfo()
-			<!--  <span class='composer_section_step'>step 1 of 7</span> -->
-			</h2>
-			<p class='composer_section_description' style="font-size: 90%; margin-bottom: 0px">
-				@log.getDateString()
-			</p>
 	</div>
-
-	
-	}
-	}
-	 <!-- last line -->
-<div class='is-dimmable'> 
-	<a class='focus-here' href='#'></a>
-	<h2 class='composer_section_header'> </h2>
-	<p class='composer_section_description'></p>
 </div>
-	
+</li>	
+<br>	
+	}
 } else {
-
-<div id='statements_first_run_helper'>
-<span class='bold'> The log is empty </span>
-</div>
-
-
+The log is empty 
 }
 
 

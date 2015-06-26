@@ -2,39 +2,21 @@
 @import java.math.BigInteger; var counter=0; 
 @main("Agents autonomes") {
 
-<header class='l-header'>
-	<!-- <link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css"> -->
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
-		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
-			</div>
-		</div>
-	</div>
-</header>
 
-	<article class="l-page-content">
-		<div id="statement_create">
-			<form class="navbar-form pull-right">
-				<br />
-				<div class="hero">
-					<div class="row">
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>Create your recipe</h2>
-						</div> 
-					</div>
-				</div>
-				
-			</form>
-		
+<article class="l-page-content">
+<div id="statement_create">
+<form class="navbar-form pull-right"
+	action="@routes.Application.submitForm()">
+	<!-- <input class="span2" type="text" placeholder="Email"> <input
+		class="span2" type="password" placeholder="Password">
+	<button type="submit" class="btn">Sign in</button>
+ -->
+	<!-- Main hero unit for a primary marketing message or call to action -->
+	<br/>
+	<div class="hero-unit">
+		<h1>Agents autonomes</h1>
+		<p>INF380</p>
+	</div>
 
 	<!-- Example row of columns -->
 	
@@ -56,15 +38,13 @@
 			id='trigger_search_channels_field_advice'></p>
 
 		<script>
-  //<![CDATA[
+  // <![CDATA[
     function triggersSearch(){
-/*       if(window.channelsSearch == undefined){
-        window.channelsSearch = {
-          escapeRegExp: function(str){
-            return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-          }
-        }
-      } */
+/*
+ * if(window.channelsSearch == undefined){ window.channelsSearch = {
+ * escapeRegExp: function(str){ return
+ * str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&"); } } }
+ */
       
       var channelsSearch = {
               escapeRegExp: function(str){
@@ -76,11 +56,11 @@
       channelsSearch["channels_trigger_search_channels_field"] = [
 		@for(channel <- channels) {   
 			@if(channel.getTriggers()!=null && channel.getTriggers().size() > 0){
-				{"value":"@channel.getName()",
-				 "name":"@channel.getName()",
+				{"value":"@channel.getClazz().getSimpleName()",
+				 "name":"@channel.getClazz().getSimpleName()",
 				 "id":@channel.getId(),
-				 "imgUrl":"@channel.getLogo()",
-				 "url":"/@channel.getName()"},
+				 "imgUrl":"https://d3rnbxvnd0hlox.cloudfront.net/images/channels/83/icons/small.png",
+				 "url":"/@channel.getClazz().getSimpleName()"},
 				}
 			}
 		 ]
@@ -135,8 +115,9 @@
             clearTimeout(transitionTimeout);
           }
           _.each(matched, function(el){
-/*         	  alert(matched.length);
-        	  alert("el id:" + el.id); */
+/*
+ * alert(matched.length); alert("el id:" + el.id);
+ */
             $( "#trigger_search_channels_field" ).parents().eq(2).find("[data-channel_id='" + el.id + "']").removeClass('out_of_search hide');
           });
           _.each(unmatched, function(el){
@@ -187,7 +168,7 @@
      
      triggersSearch();
      
-  //]]>
+  // ]]>
 </script>
 
 		
@@ -198,7 +179,7 @@
 					<a
 						class="mod-index-@counter channel-list_icon"
 						data-channel_id='@channel.getId()'
-						data-channel_module_name='@channel.getName()'
+						data-channel_module_name='@channel.getClazz().getSimpleName()'
 						data-remote
 						data-track-data='{"controller":"statements",
 				   								"action":"new",
@@ -210,11 +191,11 @@
 						id='ind_t_channel_@channel.getId()'
 						ifttt-trigger-channel-button='1' 
 						title="@channel.getDescription()">
-						<img alt="@channel.getName()" 
+						<img alt="@channel.getClazz().getSimpleName()" 
 						class="channel-list_icon_img"
 						id="channel_1172726678"
-						src="@channel.getLogo()" />
-						@channel.getName() 
+						src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/28/icons/regular.png" />
+						@channel.getClazz().getSimpleName()
 						@{counter += 1}
 					</a> 
 					}
@@ -222,6 +203,12 @@
 			</div>
 		</div>
 	</div>
+
+	
+	
+
+
+
 </article>
 }
 

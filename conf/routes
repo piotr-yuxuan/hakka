@@ -5,8 +5,7 @@
 # Home page
 GET     /                           	controllers.Application.index()
 GET		/submitForm						controllers.Application.submitForm()
-POST	/loginForm						controllers.Application.loginForm()
-GET		/homeForm						controllers.Application.homeForm()
+GET		/loginForm						controllers.Application.loginForm()
 GET		/chooseView						controllers.Application.chooseView()
 GET		/chooseTrigger					controllers.Application.chooseTrigger(channelId: Long)
 GET		/activateTrigger				controllers.Application.activateTrigger(triggerId: Long)
@@ -19,17 +18,9 @@ GET		/viewRecipes					controllers.Application.viewRecipes()
 GET		/viewRecipesAfterCreate			controllers.Application.viewRecipesAfterCreate()
 GET		/viewAdministratorLog			controllers.Application.viewAdministratorLog()
 GET		/administratorView				controllers.Application.administratorView()
-GET		/chooseActivationType			controllers.Application.chooseActivationType(triggerId: Long)
 GET		/viewRecipeLog					controllers.Application.viewRecipeLog()
 GET		/activateRecipe					controllers.Application.activateRecipe()
 GET		/userLogOut						controllers.Application.userLogOut()
-GET		/deleteRecipe					controllers.Application.deleteRecipe()
-GET		/randomlyActivationChosen		controllers.Application.randomlyActivationChosen(triggerId: Long)	
-GET		/periodicallyActivationChosen	controllers.Application.periodicallyActivationChosen(triggerId: Long)	
-GET		/manualActivationChosen			controllers.Application.manualActivationChosen(triggerId: Long)	
-GET		/administratorGraph				controllers.Application.administratorGraph()
-GET		/displayGraph					controllers.Application.displayGraph()
-
 
 # Map static resources from the /public folder to the /assets URL path
 GET     /assets/*file               controllers.Assets.at(path="/public", file)

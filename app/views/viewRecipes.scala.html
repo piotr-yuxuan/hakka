@@ -1,204 +1,128 @@
-@(user: User) 
+@(user: User)
+@import java.math.BigInteger; var counter=0;
 @main("Agents autonomes") {
 
+
+
 <!DOCTYPE html>
-<html
-	class=' not-mobile brwsr-chrome brwsr-chrome42 os-mac non-forced-fullwidth     no-js'
-	debug='true' lang='en'>
+<html class=' not-mobile brwsr-chrome brwsr-chrome42 os-mac non-forced-fullwidth     no-js' debug='true' lang='en'>
 <body>
 
-	<header class='l-header'>
-	<link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css">
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
+<header class='l-header'>
+	<div class='l-site-header'>
+		<div class='l-site-header-menus is-closed' id='site-header-menus'>
+			<div class='l-site-header-menus-inner'>
+				<nav class='l-site-header-flexible-nav'>
+				<ul class='nav nav-site is-authenticated'>
+					<form class="navbar-form pull-right"
+						action="@routes.Application.userLogOut()"> 
+						<button type="submit" class="btn" name="HomeButton"class="btn"> Home </button>
+						<button type="submit" class="btn" name="LogOutButton"> Log out </button>
+					</form> <br>
+				</ul></nav>
+			</div>
 		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
+	</div>
+
+	<div class='l-page-header'>
+		<div class='l-page-header-inner'>
+			<div class='is-alone l-page-title-unit'>
+				<div class="hero-unit">
+				<h1>Your Recipes</h1>
+				<p>Hello @user.getUsername()</p>
+			</div>
 			</div>
 		</div>
 	</div>
 </header>
 
-	<article class="l-page-content">
-			<form class="navbar-form pull-right">
-				<br />
-				<div class="hero">
-					<div class="row">
-<!-- 					<h1>What do you want to do?</h1>
-					<p>Hello @user.getUsername()</p> -->
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>@user.getUsername()'s recipes</h2>
-						</div> 
-					</div>
-				</div>
-			</form>
-		<br/>
-		
-		
-		<div class='is-dimmable'>
-        	<form class="navbar-form pull-right" action="@routes.Application.chooseView()">
-                 <div class="buttonContainer">
-                      <button type="submit" 
-                      name="createRecipesButton" value="Create Recipe" class="refreshButton" 
-                      style="display: block; width: 100%;"> Create Recipe </button>
-                	</div>
-          </form>          
-        </div>
-       
-		<br/>
-		<br/>
-		<br/>
-		<div id='statements'>
-			@if(user.getRecipes()!=null && user.getRecipes().size() > 0){
-			@for(recipe <- user.getAllRecipesForUser()) {
+<br>
+<article class='l-page-content'>
+<div id='statements'>
 
+@if(user.getRecipes()!=null && user.getRecipes().size() > 0){
+	@for(recipe <- user.getRecipes()) { 
+	
 
-			<div class='page-item'>
-				<div class='personal-recipe-manage' id='statement_@recipe.getId()'>
-					<div class="personal-recipe-manage_visual_and_desc">
-						<div class="personal_recipe_manage_visual">
-							<div class='build_size' id='start'>
-								<div class='is-dimmable'>
-									<span class='create_recipe_inline_text_block' style="font-size:120px">if</span> <span
-										style="display: none"> </span> <span
-										class='create_recipe_inline_text_block'> <a
-										href='# id='ind_t_channel_ID'
-										ifttt-trigger-channel-button='1' title="@recipe.getTriggerChannel().getName()"> <img
-											alt="NAME" class="channel-list_icon_img"
-											id="channel_1172726678"
-											src=@recipe.getTriggerChannel().getLogo() /></a>
-										<span style="display: none"> </span>
-									</span> <span class='create_recipe_inline_text_block' style="font-size:120px">then</span> 
-									<span
-										style="display: none"> </span> 
-										<span class='create_recipe_inline_text_block'> 
-										<a href='#' id='ind_t_channel_ID'  title="@recipe.getActionChannel().getName()"> 
-										<img
-											alt="NAME" class="channel-list_icon_img"
-											id="channel_1172726678"
-											src=@recipe.getActionChannel().getLogo() />
-										</a>
-									</span>
-								</div>
-							</div>
-						</div>
+	<div class='page-item'><div class='personal-recipe-manage' id='statement_24079820'>
+		<div class='build_size' id='start'>
+			<div class='is-dimmable'>
+				<span class='create_recipe_inline_text_block'>if</span><span style="display: none"> </span> <span class='create_recipe_inline_text_block'><a
+						data-channel_id='ID'
+						data-channel_module_name='NAME'
+						data-remote
+						data-track-data='{"controller":"statements",
+				   								"action":"new",
+				   								"channel_id":ID,
+				   								"funnel":{"primary":"new_statement","primary_id":"db36321c68cac267d854ea41f669ea7d"},
+				   								"channel_type":"trigger"}'
+						data-track-event='scr_choose_channel'
+						href='choose_trigger?channel_id=ID'
+						id='ind_t_channel_ID'
+						ifttt-trigger-channel-button='1' 
+						title="DESCRIPTION">
+						<img alt="NAME" 
+						class="channel-list_icon_img"
+						id="channel_1172726678"
+						src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/28/icons/regular.png" /></a> <span style="display: none"> </span> </span></span><span class='create_recipe_inline_text_block'>then</span><span style="display: none"> </span> <span class='create_recipe_inline_text_block'><a
+						data-channel_id='ID'
+						data-channel_module_name='NAME'
+						data-remote
+						data-track-data='{"controller":"statements",
+				   								"action":"new",
+				   								"channel_id":ID,
+				   								"funnel":{"primary":"new_statement","primary_id":"db36321c68cac267d854ea41f669ea7d"},
+				   								"channel_type":"trigger"}'
+						data-track-event='scr_choose_channel'
+						href='choose_trigger?channel_id=ID'
+						id='ind_t_channel_ID'
+						ifttt-trigger-channel-button='1' 
+						title="DESCRIPTION">
+						<img alt="NAME" 
+						class="channel-list_icon_img"
+						id="channel_1172726678"
+						src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/28/icons/regular.png" />
+					</a></span>		
+			</div>
+		</div>
+		<br>
+		<span><a class='personal-recipe-manage_description' > @recipe.getName() </a></span>
+		
+		<div class='personal-recipe-manage_meta'>
+			<div class='personal-recipe-manage_buttons'>
+				<span><div id="statement_create">
+					@if(recipe.isActive()){
+						<a class='personal-recipe-activation_ON' > Recipe ACTIVE </a>
 						<br>
-						<a class='personal-recipe-manage_description'>
-							@recipe.getTitle() </a>
-					</div>
-					<br> 
-
-					<div class='personal-recipe-manage_meta'>
-						<div class='personal-recipe-manage_buttons' style="float:left;">
-							<span>
-							<div id="statement_create" style="padding-right: 50px">
-									@if(recipe.getActive()){ <a> Recipe ACTIVE </a> 
-									<div style="width:250px">
-									<form action="@routes.Application.activateRecipe()">
-
-											<button 
-											style="
-											float:left;
-											margin-right: 15px;
-											width: 55px; 
-											height: 55px;
-											display: block;
-											background: url('@routes.Assets.at("images/toggleImage.png")') no-repeat;
-											background-size: 100%;"
-											title="Turn Off Recipe"
-											type="submit" 
-											class="btn" 
-											name="RecipeOff"
-											value=@recipe.getId()>
-											</button>
-										</form>
-										}else{ <a> Recipe NOT ACTIVE </a>
-										<div style="width:250px">
-										<form action="@routes.Application.activateRecipe()">
-											<button 
-											style="
-											float:left;
-											margin-right: 15px;
-											width: 55px; 
-											height: 55px;
-											display: block;
-											background: url('@routes.Assets.at("images/toggleImage.png")') no-repeat;
-											background-size: 100%;
-											"
-											title="Turn On Recipe"
-											type="submit"
-											class="btn"
-											name="RecipeOn"
-											value=@recipe.getId()>
-											</button>
-										</form>
-											}
-										<form 
-											action="@routes.Application.viewRecipeLog()">
-											<button 
-											style="
-											float:left;
-											margin-right: 15px;
-										width: 55px; 
-										height: 55px;
-										display: block;
-										background: url('@routes.Assets.at("images/logImage.png")') no-repeat;
-										background-size: 100%;
-										"
-										title="View Recipe Log"
-											type="submit" class="btn" name="viewRecipesLog"
-												value=@recipe.getId()></button>
-										</form>
-										<form 
-											action="@routes.Application.deleteRecipe()">
-											<button 
-											style="
-											float:left;
-											margin-right: 15px;
-										width: 55px; 
-										height: 55px;
-										display: block;
-										background: url('@routes.Assets.at("images/deleteIcon.png")') no-repeat;
-										background-size: 90%;
-										"
-										title="Delete Recipe "
-											type="submit" class="btn" name="deleteRecipe"
-												value=@recipe.getId()></button>
-										</form></div></span>
-										</div>
-										</div>
-										</div>
-						</div>
-					</div>
-				</div>
-			<br> } } else{ You don't have any recipe }
+						<form class="navbar-form pull-right" action="@routes.Application.activateRecipe()"> 
+							<button type="submit" class="btn" name="RecipeOff" value=@recipe.getId() > Set Recipe Off</button> 
+					}else{
+						<a class='personal-recipe-activation_OFF' > Recipe NOT ACTIVE </a>
+						<br>
+						<form class="navbar-form pull-right" action="@routes.Application.activateRecipe()"> 
+							<button type="submit" class="btn" name="RecipeOn" value=@recipe.getId() > Set Recipe On</button>
+					}
+					</form>
+					<form class="navbar-form pull-right" action="@routes.Application.viewRecipeLog()">
+					<button type="submit" class="btn" name="viewRecipesLog" value=@recipe.getId() >View Recipe Log</button></form>
+					
+				</span>
+		</div></div>
+	</div></div>
+<br>
+	
+	}			
+} else{
+You don't have any recipe
+}
 
 
-	</article>
+</div>
+</article>
 </body>
+
+
 </html>
 
-<!-- Logos: 
-
-Light switch: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/85/icons/regular.png"
-Lamp: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/637201122/icons/regular.png"
-Shortcuts: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1080092097/icons/regular.png"
-Android device: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1089090894/icons/regular.png"
-Android location: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/819446830/icons/regular.png"
-Android notification: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/364301748/icons/regular.png"
-Android call: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/405156688/icons/regular.png"
-Android message: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1322033008/icons/regular.png"
-Android watch: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1972740002/icons/regular.png"
-Home: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1571567306/icons/regular.png"
-Human: src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1845421835/icons/regular.png"
-
--->
-
 }
+

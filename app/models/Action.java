@@ -7,66 +7,59 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
-import play.data.validation.Constraints.Required;
 import play.db.ebean.Model;
 
-@Entity
+//@Entity
 public class Action extends Model {
 
 	private static final long serialVersionUID = 1L;
 
-	@Id
-	private long id;
-	
-	@Required
-	private String name;
-	
-	private String description;
-	
-	@OneToOne
-	private String fieldName;
-	
-	@ManyToOne
-	private Channel channel;
-	
-	@OneToMany(cascade = CascadeType.ALL)
-	private List<Recipe> recipes;
-	
-	public static Model.Finder<Long, Action> find = new Model.Finder<Long, Action>(
-			Long.class, Action.class);
-	
-	public Action(String name, String description) {
-		this.name = name;
+	public static Model.Finder<Long, Action> find = new Model.Finder<Long, Action>(Long.class, Action.class);
+
+	protected Class<?> clazz;
+	/**
+	 * Important to be able to get it from this class because it can simplify
+	 * Recipe contructor.
+	 */
+	// @ManyToOne(cascade = CascadeType.ALL)
+	protected Channel channel;
+	@SuppressWarnings("rawtypes")
+	// @OneToMany(mappedBy = "action", cascade = CascadeType.ALL)
+	protected List<Modality> fields;
+
+	// @Id
+	protected long id;
+	protected String description;
+
+	public Action(@SuppressWarnings("rawtypes") List<Modality> fields, Channel channel, Class<?> clazz,
+			String description) {
+		this.fields = fields;
+		this.clazz = clazz;
+		this.channel = channel;
 		this.description = description;
 	}
 
-	
-	public Action(String name) {
-		this.name = name;
-	}
-	
-
-	public long getId() {
-		return id;
-	}
-
-
-	public String getName() {
-		return name;
+	/**
+	 * id should be final, but if so the constructor should set it. This trick
+	 * avoids it.
+	 * 
+	 * @param id
+	 */
+	@SuppressWarnings("unused")
+	private void setId(long id) {
 	}
 
-	public void setName(String name) {
-		this.name = name;
+	/*
+	 * Below, generated methods.
+	 */
+
+	public Class<?> getClazz() {
+		return clazz;
 	}
 
-	public String getDescription() {
-		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
+	public void setClazz(Class<?> clazz) {
+		this.clazz = clazz;
 	}
 
 	public Channel getChannel() {
@@ -77,21 +70,27 @@ public class Action extends Model {
 		this.channel = channel;
 	}
 
-	public String getFieldName() {
-		return fieldName;
+	public String getDescription() {
+		return description;
 	}
 
-	public void setFieldName(String fieldName) {
-		this.fieldName = fieldName;
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
-	public List<Recipe> getRecipes() {
-		return recipes;
+	public long getId() {
+		return id;
 	}
 
-	public void setRecipes(List<Recipe> recipes) {
-		this.recipes = recipes;
+	public static long getSerialversionuid() {
+		return serialVersionUID;
 	}
-	
-	
+
+	public List<Modality> getFields() {
+		return fields;
+	}
+
+	public void setFields(List<Modality> fields) {
+		this.fields = fields;
+	}
 }

@@ -1,68 +1,50 @@
-@(channel: Channel)
-@import java.math.BigInteger; var counter=0; 
+@(channel: Channel) @import java.math.BigInteger; var counter=0;
 @main("Choose your action") {
 
-<header class='l-header'>
-	<!-- <link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css"> -->
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
-		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
+<article class="l-page-content">
+	<div id="statement_create">
+		<form class="navbar-form pull-right"
+			action="@routes.Application.submitForm()">
+			<!-- <input class="span2" type="text" placeholder="Email"> <input
+				class="span2" type="password" placeholder="Password">
+			<button type="submit" class="btn">Sign in</button>
+		 -->
+			<!-- Main hero unit for a primary marketing message or call to action -->
+			<br />
+			<div class="hero-unit">
+				<h1>Choose your action</h1>
+				<p>Agents Autonomes</p>
 			</div>
-		</div>
-	</div>
-</header>
 
-	<article class="l-page-content">
-		<div id="statement_create">
-			<form class="navbar-form pull-right">
-				<!-- Main hero unit for a primary marketing message or call to action -->
-				<br />
-				<div class="hero">
-					<div class="row">
 
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>Create your recipe</h2>
-						</div> 
-					</div>
+			<div class='is-dimmable'>
+				<h2 class='composer_section_header'>
+					<img alt="@channel.getClazz().getSimpleName()"
+						class="composer_section_header_icon"
+						src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/405156688/icons/small.png">
+					Choose an action <span class='composer_section_step'>step 5
+						of 7</span>
+				</h2>
+
+
+				<input id="statement_live_action_attribute_action_id"
+					name="statement[@channel.getId()]" type="hidden" value="-1">
+				<div class="action-list">
+					@for(action <- channel.getActions()) { <a class="action-list_item"
+						data-track-data="{\"
+						controller\":"statements","action":"choose_action","action_id":@action.getId(),"funnel":{"primary":"new_statement","primary_id":"3d7bbe4e0ac4655368202002e6b8f543"}}"
+		 data-track-event="src_choose_action"
+						data-action_id="@action.getId()"
+						href="@routes.Application.completeActionFields(channel.getId())"
+						id="action_@action.getId()">
+						<h3 class="action-list_item_name">@action.getClazz().getSimpleName()</h3>
+						<p class="action-list_item_desc">@action.getDescription()</p>
+					</a> }
 				</div>
-			</form>
+			</div>
 
-			
-			<div class='is-dimmable'> 
-			<h2 class='composer_section_header'>
-			<img alt="@channel.getName()" class="composer_section_header_icon" src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/405156688/icons/small.png"> 
-				Choose an action 
-			<span class='composer_section_step'>step 5 of 7</span>
-			</h2>
-
-		
-		<input id="statement_live_action_attribute_action_id" name="statement[@channel.getId()]" type="hidden" value="-1">
-		<div class="action-list">
-		@for(action <- channel.getActions()) {
-		  
-		<a class="action-list_item" data-track-data="{\"controller\":"statements","action":"choose_action","action_id":@action.getId(),"funnel":{"primary":"new_statement","primary_id":"3d7bbe4e0ac4655368202002e6b8f543"}}"
-		 data-track-event="src_choose_action" 
-		 data-action_id="@action.getId()" 
-		 href="@routes.Application.completeActionFields(action.getId())" 
-		 id="action_@action.getId()">
-		 	<h3 class="action-list_item_name">@action.getName()</h3>
-		 	<p class="action-list_item_desc">@action.getDescription()</p>
-		 </a>
-		}
-		</div>
-		</div>
-			
 		</form>
-	
+
 	</div>
 
 

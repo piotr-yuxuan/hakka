@@ -2,47 +2,25 @@
 @import java.math.BigInteger; var pointer=0; 
 @main("Choose your action") {
 
-<header class='l-header'>
-	<!-- <link href="http://fonts.googleapis.com/css?family=Raleway:600,400,200"
-		rel="stylesheet" type="text/css"> -->
-	<div class="row1">
-		<div class="small-12 medium-4 large-6 columns namelogo">
-			<h2 font-family= "Times New Roman">Agents Autonomes</h2>
-		</div>
-		<div class="small-12 medium-8 large-6 columns">
-			<div class="nav-bar">
-				<ul class="button-group">
-					<li><a href="@routes.Application.homeForm()" class="button">Home</a></li>
-					<li><a href="@routes.Application.userLogOut()" class="button">Log out</a></li>
-				</ul>
+<article class="l-page-content">
+	<div id="statement_create">
+		<form class="navbar-form pull-right"
+			action="@routes.Application.createRecipe()">
+			
+			<br/>
+			<div class="hero-unit">
+				<h1>Complete action fields</h1>
+				<p>Agents Autonomes</p>
 			</div>
-		</div>
-	</div>
-</header>
-
-	<article class="l-page-content">
-		<div id="statement_create">
-			<form class="navbar-form pull-right" action="@routes.Application.createRecipe()">
-				<!-- Main hero unit for a primary marketing message or call to action -->
-				<br />
-				<div class="hero">
-					<div class="row">
-
-						 <div class="large-12 columns intro-text">
-						 <!-- <p>What do you want to do?</p> -->
-							<h2>Create your recipe</h2>
-						</div> 
-					</div>
-				</div>
 			
 			<div class='is-dimmable'> 
 			<h2 class='composer_section_header'>
-			<img alt="@action.getName()" class="composer_section_header_icon" src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/405156688/icons/small.png"> 
+			<img alt="@action.getClazz().getSimpleName()" class="composer_section_header_icon" src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/405156688/icons/small.png"> 
 				Choose a action 
 			<span class='composer_section_step'>step 3 of 7</span>
 			</h2>
 			
-			<div class="action_incomplete"  style="padding-left:15px">
+			<div class="action_incomplete">
 				<div class="tanda_wrap">
 					<h3 class="channel_thing_med_name">
 					@action.getDescription()
@@ -52,38 +30,38 @@
 			
 			<div class="l-clearfix action_fields form-euprimary">
 			
-			@if(action.getFieldName() != null && action.getFieldName() != "") {
-				<div class="action-field" style="padding-left:15px">
+			@if(action.getFields.size() > 0) {
+				<div class="action-field">
+				@for(field <- action.getFields()) {
 					<label class="action-field_label" for="string_value">
-					<img alt="@action.getFieldName()" 
+					<img alt="@field.getName()" 
 					class="simple-recipe-field_channel-icon" 
 					src="https://d3rnbxvnd0hlox.cloudfront.net/images/channels/1089090894/icons/small.png"
-					title="@action.getFieldName()">
-					@action.getFieldName()
+					title="@field.getName()">
+					@field.getName()
 					</label>
 					<div class="clear"></div>
 					<input autocapitalize="off" autocorrect="off" class="tf-text" 
 					id="statement_live_action_attributes_live_action_fields_attributes_@{pointer}_string_value"
-					name="field"
+					name="field.getName()"
 					size="30"
-					type="text" style="width: 300px; float: left;">
-					<br/>
-					<br/>
+					type="text" value>
 					<div class="action_field_helper_text">
 						Write here ... :)
 					</div>
 				</div>
-
+				@{pointer+=1}
+				}
 				</div>
 			} else {
-				<p class="no_fields" style="padding-left:15px">
+				<p class="no_fields">
 				No fields to complete.
 				</p>
 			}
 				
 			</div>
 			
-		<div id="live_action_submit" style="padding-left: 15px">
+		<div id="live_action_submit">
 			<input type="submit" id="validate_action_btn" class="btn-primary"
 			value="Create Action">
 		</div>
